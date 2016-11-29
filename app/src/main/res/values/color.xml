@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<resources>  
+ 
+    
+    
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+   
+ <color name="style_red">#ff4c41</color>
+ <color name="style_divider_color">#C9C7CD</color>
+ 	<color name="white">#FFFFFF</color><!--白色 -->  
+  <color name="viewfinder_frame">#ff000000</color>
+  <color name="viewfinder_laser">#ffff0000</color>
+  <color name="viewfinder_mask">#60000000</color>
+ 	<color name="lightgreen">#90EE90</color><!--亮绿色 -->  
+   <color name="possible_result_points">#c0ffff00</color> 
+   <color name="result_view">#b0000000</color>
+   <drawable name="kongbai_image">#ffffff</drawable>
+    <color name="choose_eara_item_press_color">#f4f4f4</color>
+      <color name="popup_main_background">#b0000000</color>
+    <color name="no_color">#00000000</color>
+    
+     <color name="no_login">#5c664f</color>
+     <color name="piliangguanli">#909090</color>
+     
+ <color name="main_green">#009944</color>
+</resources>  
