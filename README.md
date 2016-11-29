@@ -1,0 +1,2 @@
+# AndroidScanDemo
+scan qrcode demo
