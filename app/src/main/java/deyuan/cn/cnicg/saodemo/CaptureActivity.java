@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
@@ -118,63 +119,6 @@ public class CaptureActivity extends Activity implements Callback,
 		super.onDestroy();
 	}
 
-	Handler k = new Handler() {
-
-		@Override
-		public void handleMessage(Message msg) {
-			findViewById(R.id.progressBar1).setVisibility(View.GONE);
-			Toast.makeText(CaptureActivity.this, "查询结果：" + msg.obj,
-					Toast.LENGTH_LONG).show();
-			handler.restartPreviewAndDecode();
-			super.handleMessage(msg);
-		}
-	};
-
-	public boolean sendGetRequest(String path, Map<String, String> params,
-			String enc) throws Exception {
-
-		StringBuilder sb = new StringBuilder(path);
-		sb.append('?');
-		// ?method=save&title=12345678&timelength=26&
-		// 迭代Map拼接请求参数
-		for (Map.Entry<String, String> entry : params.entrySet()) {
-			sb.append(entry.getKey()).append('=')
-					.append( entry.getValue() )
-					.append('&');
-		}
-		sb.deleteCharAt(sb.length() - 1);// 删除最后一个"&"
-		System.out.println("url:" + sb.toString());
-		URL url = new URL(sb.toString());
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setConnectTimeout(5 * 1000);
-
-
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					conn
-
-					.getInputStream()));
-
-			String lines = "";
-
-			String ss = "";
-
-			while ((lines = in.readLine()) != null) {
-
-				// System.out.println(lines);
-
-				ss += lines;
-
-			}
-			Message msg = new Message();
-			msg.obj = ss;
-			k.sendMessage(msg);
-
-			return true;
-
-
-	}
-
 	/**
 	 * Handler scan result
 	 * 
@@ -187,32 +131,12 @@ public class CaptureActivity extends Activity implements Callback,
 
 		final String resultString = result.getText();
 
-		if (resultString.equals("")) {
-			Toast.makeText(CaptureActivity.this, "扫描失败或者二维码无内容!",
-					Toast.LENGTH_SHORT).show();
-		}
-		findViewById(R.id.progressBar1).setVisibility(View.VISIBLE);
-		new Thread(new Runnable() {
+		Toast.makeText(CaptureActivity.this, resultString,Toast.LENGTH_SHORT).show();
 
-			@Override
-			public void run() {
-
-				// 调用国家平台鉴权接口 获取数据
-				String serverURL = "http://www.cniotroot.com:81/sid";
-				Map<String, String> params = new HashMap<String, String>();
-				params.put("m", "query");
-				params.put("param", "{\"code\":" + "\"" + resultString + "\"}");
-				params.put("app_key", "zhanting");
-				params.put("sign", "e11bdc39111a59abbe56e057f20f883e");
-
-				try {
-					sendGetRequest(serverURL, params, "UTF-8");
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}).start();
+		Intent intent = new Intent();
+		intent.putExtra("result",resultString);
+		setResult(0,intent);
+		finish();
 
 	}
 
